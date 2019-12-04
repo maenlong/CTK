@@ -39,6 +39,16 @@ if(CMAKE_CXX_STANDARD)
   set(ep_cxx_standard_arg "-DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}")
 endif()
 
+# Add install command
+#if(WIN32)
+#   set(_INSTALL_CMD nmake install)
+#else()
+#	set(_INSTALL_CMD make install)
+#endif()
+
+# Set install location
+set(_INSTALL_DIR ${CTK_BINARY_DIR}/../CTKInstall)
+
 ExternalProject_Add(${proj}
   ${${proj}_EP_ARGS}
   DOWNLOAD_COMMAND ""
@@ -49,11 +59,12 @@ ExternalProject_Add(${proj}
     -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
     -DCMAKE_CXX_FLAGS_INIT:STRING=${CMAKE_CXX_FLAGS_INIT}
     -DCMAKE_C_FLAGS_INIT:STRING=${CMAKE_C_FLAGS_INIT}
-    -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+    -DCMAKE_INSTALL_PREFIX:PATH=${_INSTALL_DIR}
     -DCMAKE_MACOSX_RPATH:BOOL=${CMAKE_MACOSX_RPATH}
     ${ep_cxx_standard_arg}
   SOURCE_DIR ${CTK_SOURCE_DIR}
   BINARY_DIR ${CTK_BINARY_DIR}/CTK-build
+  INSTALL COMMAND ${_INSTALL_CMD}
   INSTALL_COMMAND ""
   DEPENDS
     ${CTK_DEPENDENCIES}
