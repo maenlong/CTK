@@ -40,11 +40,11 @@ if(CMAKE_CXX_STANDARD)
 endif()
 
 # Add install command
-#if(WIN32)
-#   set(_INSTALL_CMD nmake install)
-#else()
-#	set(_INSTALL_CMD make install)
-#endif()
+if(WIN32)
+    set(_INSTALL_CMD nmake install)
+else()
+    set(_INSTALL_CMD make install)
+endif()
 
 # Set install location
 set(_INSTALL_DIR ${CTK_BINARY_DIR}/../CTKInstall)
@@ -64,8 +64,7 @@ ExternalProject_Add(${proj}
     ${ep_cxx_standard_arg}
   SOURCE_DIR ${CTK_SOURCE_DIR}
   BINARY_DIR ${CTK_BINARY_DIR}/CTK-build
-  INSTALL COMMAND ${_INSTALL_CMD}
-  INSTALL_COMMAND ""
+  INSTALL_COMMAND ${_INSTALL_CMD}
   DEPENDS
     ${CTK_DEPENDENCIES}
   )
